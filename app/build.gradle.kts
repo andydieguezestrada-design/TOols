@@ -13,8 +13,8 @@ android {
         applicationId = "com.tools.maestro"
         minSdk = 31
         targetSdk = 34
-        versionCode = 42
-        versionName = "3.1.11"
+        versionCode = 43
+        versionName = "3.1.12"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {

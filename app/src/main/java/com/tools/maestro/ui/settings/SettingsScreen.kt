@@ -24,7 +24,6 @@ import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Security
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Smartphone
-import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -50,11 +49,7 @@ fun SettingsScreen(onBack: () -> Unit) {
         ops.unsafeCheckOpNoThrow(android.app.AppOpsManager.OPSTR_GET_USAGE_STATS, android.os.Process.myUid(), context.packageName) == android.app.AppOpsManager.MODE_ALLOWED
     }.getOrDefault(false)
     fun installGranted(): Boolean = Build.VERSION.SDK_INT < Build.VERSION_CODES.O || context.packageManager.canRequestPackageInstalls()
-    fun accessibilityGranted(): Boolean = runCatching {
-        val manager = context.getSystemService(android.content.Context.ACCESSIBILITY_SERVICE) as android.view.accessibility.AccessibilityManager
-        manager.getEnabledAccessibilityServiceList(android.accessibilityservice.AccessibilityServiceInfo.FEEDBACK_ALL_MASK)
-            .any { it.resolveInfo?.serviceInfo?.packageName == context.packageName }
-    }.getOrDefault(false)
+
 
     fun mediaGranted(): Boolean = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
         listOf(Manifest.permission.READ_MEDIA_IMAGES, Manifest.permission.READ_MEDIA_VIDEO, Manifest.permission.READ_MEDIA_AUDIO)
@@ -154,7 +149,6 @@ fun SettingsScreen(onBack: () -> Unit) {
             }
 
             item { SectionTitle("AGENTE Y CONTROL DEL DISPOSITIVO") }
-            item { PermissionCard({ Icon(Icons.Default.Visibility, null) }, "Automatización mediante Accesibilidad", "Permite al agente interactuar con interfaces del dispositivo. Android exige que tú lo habilites manualmente en Ajustes.", accessibilityGranted(), "Abrir Ajustes") { context.startActivity(Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS)) } }
             item { PermissionCard({ Icon(Icons.Default.Smartphone, null) }, "Mostrar sobre otras aplicaciones", "Acceso especial para herramientas flotantes y asistencia contextual.", overlayGranted(), "Abrir Ajustes") { if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) context.startActivity(Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION).apply { data = Uri.parse("package:${context.packageName}") }) } }
             item { PermissionCard({ Icon(Icons.Default.Security, null) }, "Acceso al uso de aplicaciones", "Permite consultar estadísticas de uso cuando una función del agente lo necesite.", usageGranted(), "Abrir Ajustes") { context.startActivity(Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS)) } }
             item { PermissionCard({ Icon(Icons.Default.Settings, null) }, "Instalar aplicaciones desde TOols", "Permite iniciar la instalación de APK generados por tus proyectos, siempre mediante confirmación de Android.", installGranted(), "Abrir Ajustes") { if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) context.startActivity(Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES).apply { data = Uri.parse("package:${context.packageName}") }) } }

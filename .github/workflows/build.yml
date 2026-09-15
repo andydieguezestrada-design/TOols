@@ -63,8 +63,8 @@ jobs:
 
           cat > dist/BUILD_INFO.txt <<INFO
           Project: TOols
-          Version: 3.1.1
-          Version code: 32
+          Version: 3.1.12
+          Version code: 43
           Commit: ${GITHUB_SHA}
           Ref: ${GITHUB_REF}
           Event: ${GITHUB_EVENT_NAME}

@@ -43,12 +43,7 @@ class PermissionManager @Inject constructor(
     fun hasInstallPackagesAccess(): Boolean =
         Build.VERSION.SDK_INT < Build.VERSION_CODES.O || context.packageManager.canRequestPackageInstalls()
 
-    fun hasAccessibilityAccess(): Boolean =
-        runCatching {
-            val manager = context.getSystemService(android.content.Context.ACCESSIBILITY_SERVICE) as android.view.accessibility.AccessibilityManager
-            manager.getEnabledAccessibilityServiceList(android.accessibilityservice.AccessibilityServiceInfo.FEEDBACK_ALL_MASK)
-                .any { it.resolveInfo?.serviceInfo?.packageName == context.packageName }
-        }.getOrDefault(false)
+
 
     fun missingStoragePermissions(): List<String> = when {
         Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU -> listOf(
