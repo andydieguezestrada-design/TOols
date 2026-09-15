@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">TOols</string>
+    <string name="app_description">AI-Powered IDE for Android Development</string>
+    
+    <!-- Dashboard -->
+    <string name="dashboard_title">Projects</string>
+    <string name="new_project">New Project</string>
+    <string name="no_projects">No projects yet</string>
+    <string name="create_first_project">Create your first project to get started</string>
+    
+    <!-- Project -->
+    <string name="project_name">Project Name</string>
+    <string name="project_type">Project Type</string>
+    <string name="project_location">Location</string>
+    <string name="create_project">Create Project</string>
+    <string name="delete_project">Delete Project</string>
+    
+    <!-- Error Messages -->
+    <string name="error_network">Network error. Please check your connection.</string>
+    <string name="error_permission_denied">Permission denied</string>
+    <string name="error_file_not_found">File not found</string>
+    <string name="error_database">Database error</string>
+    <string name="error_unknown">An unknown error occurred</string>
+    
+    <!-- Success Messages -->
+    <string name="project_created">Project created successfully</string>
+    <string name="project_deleted">Project deleted</string>
+    <string name="changes_saved">Changes saved</string>
+    
+    <!-- Navigation -->
+    <string name="editor">Code Editor</string>
+    <string name="terminal">Terminal</string>
+    <string name="chat_ai">AI Chat</string>
+    <string name="github">GitHub</string>
+    <string name="settings">Settings</string>
+    
+    <!-- Editor -->
+    <string name="copy">Copy</string>
+    <string name="paste">Paste</string>
+    <string name="undo">Undo</string>
+    <string name="redo">Redo</string>
+    <string name="find">Find</string>
+    <string name="replace">Replace</string>
+    <string name="line">Line</string>
+    <string name="column">Column</string>
+    
+    <!-- Build -->
+    <string name="build">Build</string>
+    <string name="building">Building…</string>
+    <string name="build_success">Build successful</string>
+    <string name="build_failed">Build failed</string>
+    
+    <!-- Permissions -->
+    <string name="permission_storage">Storage access is needed to manage your projects</string>
+    <string name="permission_internet">Internet access is needed for AI features</string>
+    <string name="accessibility_service_description">Permite a TOols ejecutar automatizaciones del dispositivo que el usuario haya autorizado explícitamente.</string>
+    <string name="allow">Allow</string>
+    <string name="deny">Deny</string>
+</resources>

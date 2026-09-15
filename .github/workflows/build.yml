@@ -1,0 +1,83 @@
+name: Build and Test
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Setup Gradle 8.5
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.5'
+
+      - name: Verify Gradle
+        run: gradle --version
+
+      - name: Run lint
+        run: gradle --no-daemon lint
+
+      - name: Run unit tests
+        run: gradle --no-daemon testDebugUnitTest
+
+      - name: Build debug APK
+        run: gradle --no-daemon assembleDebug
+
+      - name: Run code analysis
+        run: gradle --no-daemon check
+
+      - name: Build release APK on main
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: gradle --no-daemon assembleRelease
+
+      - name: Prepare single delivery artifact
+        if: always()
+        shell: bash
+        run: |
+          set -e
+          rm -rf dist
+          mkdir -p dist
+
+          if [ -f app/build/outputs/apk/debug/app-debug.apk ]; then
+            cp app/build/outputs/apk/debug/app-debug.apk dist/TOols-debug.apk
+          fi
+
+          if [ -f app/build/outputs/apk/release/app-release-unsigned.apk ]; then
+            cp app/build/outputs/apk/release/app-release-unsigned.apk dist/TOols-release-unsigned.apk
+          fi
+
+          cat > dist/BUILD_INFO.txt <<INFO
+          Project: TOols
+          Version: 3.1.1
+          Version code: 32
+          Commit: ${GITHUB_SHA}
+          Ref: ${GITHUB_REF}
+          Event: ${GITHUB_EVENT_NAME}
+          INFO
+
+          echo "Single artifact contents:"
+          find dist -maxdepth 1 -type f -printf '%f\n' | sort
+
+      - name: Upload single artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: TOols-APK
+          path: dist/
+          if-no-files-found: error
+          retention-days: 14

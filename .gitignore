@@ -1,0 +1,50 @@
+# Gradle files
+.gradle/
+build/
+.gradletasknamecache
+
+# Local configuration file (SDK path, etc)
+local.properties
+
+# IDE files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+*.iml
+*.iws
+*.ipr
+
+# Java/Kotlin
+*.class
+*.jar
+*.war
+*.aar
+*.jmod
+
+# Native
+*.o
+*.a
+*.so
+
+# Android Profiler
+*.trace
+
+# Local environment
+.env
+.env.local
+
+# Gradle wrapper
+gradle/wrapper/gradle-wrapper.jar
+
+# Test coverage
+coverage/
+jacoco/
+
+# Build outputs
+*.apk
+*.aab
+app/build/
+*.dex
